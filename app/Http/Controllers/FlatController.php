@@ -2,47 +2,46 @@
 
 namespace App\Http\Controllers;
 
-use App\Expense;
-use App\Category;
+use App\Flat;
+use App\Http\Resources\FlatResource;
 use Illuminate\Http\Request;
-use App\Http\Resources\CategoryResource;
 
-class CategoryController extends Controller
+class FlatController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
      * @param Request $request
-     * @return CategoryResourceCollection
+     * @return FlatResourceCollection
      */
     public function index(Request $request)
     {
-        return CategoryResource::collection(Category::where("user_id", $request->auth->id)->get());
+        return FlatResource::collection(Flat::where("user_id", $request->auth->id)->get());
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request $request
-     * @return CategoryResource
+     * @return FlatResource
      */
     public function store(Request $request)
     {
-        if ($request->has("category")) {
-            $exist = Category::where("category", $request->category)->where("user_id", $request->auth->id)->first();
-            if (!empty($exist)) {
-                return response()->json(['error' => 'Category with same name already exist'], 422);
-            }
-            $category = Category::create([
-                'user_id'  => $request->auth->id,
-                'category' => $request->category,
-                'count'    => 0,
-            ]);
+        $this->validate($request, [
+            'name'    => 'required|string',
+            'address' => 'required|string',
+            'floor'   => 'required|numeric',
+        ]);
 
-            return new CategoryResource($category);
-        } else {
-            return response()->json(['error' => 'Category name must be present'], 422);
-        }
+        $flat = Flat::create([
+            'user_id' => $request->auth->id,
+            'name'    => $request->name,
+            'address' => $request->address,
+            'floor'   => $request->floor,
+
+        ]);
+
+        return new FlatResource($flat);
     }
 
     /**
@@ -115,7 +114,7 @@ class CategoryController extends Controller
         $expense = Expense::where("category", $id)->where("user_id", $request->auth->id)->first();
         if (!empty($expense)) {
             return response()->json([
-                'error' => "Category is connected with one or more Expense and can't be deleted."
+                'error' => "Category is connected with one or more Expense and can't be deleted.",
             ], 409);
         }
 

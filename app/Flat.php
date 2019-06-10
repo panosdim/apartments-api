@@ -4,11 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Lessees extends Model
+class Flat extends Model
 {
-    protected $fillable = ['name', 'address', 'postal_code', 'from', 'until','flat_id'];
+    protected $fillable = ['name', 'address', 'floor'];
     public $timestamps  = false;
-    public $table       = 'lessees';
+    public $table       = 'flats';
 
     public function user()
     {
