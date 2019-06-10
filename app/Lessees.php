@@ -4,12 +4,11 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Income extends Model
+class Lessees extends Model
 {
-    protected $fillable = ['amount', 'comment', 'date', 'user_id'];
-    protected $casts    = ['amount' => 'float'];
+    protected $fillable = ['name', 'address', 'postal_code', 'from', 'until','flat_id'];
     public $timestamps  = false;
-    public $table       = "income";
+    public $table       = 'lessees';
 
     public function user()
     {

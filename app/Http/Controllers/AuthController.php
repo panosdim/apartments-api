@@ -82,7 +82,6 @@ class AuthController extends BaseController
     public function register()
     {
         $this->validate($this->request, [
-            'username'  => 'required',
             'email'     => 'required|email',
             'password'  => 'required',
             'firstName' => 'required',
@@ -97,16 +96,7 @@ class AuthController extends BaseController
             ], 422);
         }
 
-        // Find the user by username
-        $user = User::where('username', $this->request->input('username'))->first();
-        if ($user) {
-            return response()->json([
-                'error' => 'User with same username already exists.',
-            ], 422);
-        }
-
         $user = User::create([
-            'username'   => $this->request->username,
             'email'      => $this->request->email,
             'password'   => Hash::make($this->request->password),
             'first_name' => $this->request->firstName,

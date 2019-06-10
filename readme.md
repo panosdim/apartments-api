@@ -1,10 +1,10 @@
-# Money Track REST API
+# Apartments Track REST API
 
-It provides a REST API for CRUD operations needed by Money Track Application. It is bases on [Lumen](https://lumen.laravel.com/) and [JWT](https://jwt.io/).
+It provides a REST API for CRUD operations needed by Apartments Track Application. It is bases on [Lumen](https://lumen.laravel.com/) and [JWT](https://jwt.io/).
 
 ## Official Documentation
 
-Documentation for the REST API can be found on the [Money Track API](https://documenter.getpostman.com/view/4800685/S1LzwReP).
+Documentation for the REST API can be found on the [Apartments Track API](https://documenter.getpostman.com/view/4800685/S1LzwReP).
 
 ## Security Vulnerabilities
 
