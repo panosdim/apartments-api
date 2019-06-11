@@ -28,15 +28,15 @@ $router->group(
             return response()->json($request->auth);
         });
 
-        // Category API
+        // Flat API
         $router->group([
-            'prefix' => '/category',
+            'prefix' => '/flat',
         ], function () use ($router) {
-            $router->get('/', 'CategoryController@index');
-            $router->post('/', 'CategoryController@store');
-            $router->get('/{id:[\d]+}', 'CategoryController@show');
-            $router->put('/{id:[\d]+}', 'CategoryController@update');
-            $router->delete('/{id:[\d]+}', 'CategoryController@destroy');
+            $router->get('/', 'FlatController@index');
+            $router->post('/', 'FlatController@store');
+            $router->get('/{id:[\d]+}', 'FlatController@show');
+            $router->put('/{id:[\d]+}', 'FlatController@update');
+            $router->delete('/{id:[\d]+}', 'FlatController@destroy');
         });
 
         // Income API

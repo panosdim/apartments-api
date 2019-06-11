@@ -28,7 +28,7 @@ class FlatController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name'    => 'required|string',
+            'name'    => 'required|string|unique:flats,name',
             'address' => 'required|string',
             'floor'   => 'required|numeric',
         ]);
@@ -49,17 +49,17 @@ class FlatController extends Controller
      *
      * @param Request $request
      * @param $id
-     * @return CategoryResource
+     * @return FlatResource
      */
     public function show(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
-        // Check if currently authenticated user is the owner of the category
-        if ($request->auth->id != $category->user_id) {
-            return response()->json(['error' => 'You can only view your own categories.'], 403);
+        $flat = Flat::findOrFail($id);
+        // Check if currently authenticated user is the owner of the flat
+        if ($request->auth->id != $flat->user_id) {
+            return response()->json(['error' => 'You can only view your own flats.'], 403);
         }
 
-        return new CategoryResource($category);
+        return new FlatResource($flat);
     }
 
     /**
@@ -67,32 +67,37 @@ class FlatController extends Controller
      *
      * @param  \Illuminate\Http\Request $request
      * @param  $id
-     * @return CategoryResource
+     * @return FlatResource
      */
     public function update(Request $request, $id)
     {
-        // Check if currently authenticated user is the owner of the category
-        $category = Category::findOrFail($id);
-        if ($request->auth->id != $category->user_id) {
-            return response()->json(['error' => 'You can only edit your own categories.'], 403);
+        $this->validate($request, [
+            'name'    => 'string|unique:flats,name',
+            'address' => 'string',
+            'floor'   => 'numeric',
+        ]);
+
+        // Check if currently authenticated user is the owner of the flat
+        $flat = Flat::findOrFail($id);
+        if ($request->auth->id != $flat->user_id) {
+            return response()->json(['error' => 'You can only edit your own flats.'], 403);
         }
 
-        if ($request->has("category")) {
-            $exist = Category::where("category", $request->category)->where("user_id", $request->auth->id)->first();
-            if (!empty($exist)) {
-                return response()->json(['error' => 'Category with same name already exist'], 422);
-            } else {
-                $category->category = $request->category;
-            }
+        if ($request->has("name")) {
+            $flat->name = $request->name;
         }
 
-        if ($request->has("count")) {
-            $category->count = $request->count;
+        if ($request->has("address")) {
+            $flat->address = $request->address;
         }
 
-        $category->save();
+        if ($request->has("floor")) {
+            $flat->floor = $request->floor;
+        }
 
-        return new CategoryResource($category);
+        $flat->save();
+
+        return new FlatResource($flat);
     }
 
     /**
@@ -104,21 +109,13 @@ class FlatController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        // Check if currently authenticated user is the owner of the category
-        $category = Category::findOrFail($id);
-        if ($request->auth->id != $category->user_id) {
-            return response()->json(['error' => 'You can only delete your own category.'], 403);
+        // Check if currently authenticated user is the owner of the flat
+        $flat = Flat::findOrFail($id);
+        if ($request->auth->id != $flat->user_id) {
+            return response()->json(['error' => 'You can only delete your own flat.'], 403);
         }
 
-        // Check if category is connected with expenses
-        $expense = Expense::where("category", $id)->where("user_id", $request->auth->id)->first();
-        if (!empty($expense)) {
-            return response()->json([
-                'error' => "Category is connected with one or more Expense and can't be deleted.",
-            ], 409);
-        }
-
-        $category->delete();
+        $flat->delete();
 
         return response()->json(null, 204);
     }
