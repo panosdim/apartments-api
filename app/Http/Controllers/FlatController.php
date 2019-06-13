@@ -122,5 +122,6 @@ class FlatController extends Controller
 
     public function __construct()
     {
+        FlatResource::withoutWrapping();
     }
 }

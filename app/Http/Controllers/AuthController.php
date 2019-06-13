@@ -61,8 +61,8 @@ class AuthController extends BaseController
         if (!$user) {
             // You wil probably have some sort of helpers or whatever
             // to make sure that you have the same response format for
-            // differents kind of responses. But let's return the
-            // below respose for now.
+            // different kind of responses. But let's return the
+            // below response for now.
             return response()->json([
                 'error' => 'Email does not exist.',
             ], 400);
@@ -71,6 +71,7 @@ class AuthController extends BaseController
         if (Hash::check($this->request->input('password'), $user->password)) {
             return response()->json([
                 'token' => $this->jwt($user),
+                'user' => $user,
             ], 200);
         }
         // Bad Request response
