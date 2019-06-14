@@ -29,5 +29,22 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      */
     protected $hidden = [
         'password',
+        'first_name',
+        'last_name',
     ];
+
+    public function getFirstNameAttribute($value)
+    {
+        return $this->attributes['first_name'];
+    }
+
+    public function getLastNameAttribute($value)
+    {
+        return $this->attributes['last_name'];
+    }
+
+    protected $maps = ['first_name' => 'firstName', 'last_name' => 'lastName'];
+
+    protected $appends = ['firstName', 'lastName'];
+
 }
