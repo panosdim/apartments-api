@@ -46,5 +46,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $maps = ['first_name' => 'firstName', 'last_name' => 'lastName'];
 
     protected $appends = ['firstName', 'lastName'];
-
 }
