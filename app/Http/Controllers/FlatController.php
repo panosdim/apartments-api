@@ -72,7 +72,7 @@ class FlatController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name'    => 'string|unique:flats,name',
+            'name'    => 'string|unique:flats,name,'. $id,
             'address' => 'string',
             'floor'   => 'numeric',
         ]);
