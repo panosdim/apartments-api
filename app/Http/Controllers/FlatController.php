@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Flat;
 use App\Http\Resources\FlatResource;
 use Illuminate\Http\Request;
+use Exception;
 
 class FlatController extends Controller
 {
@@ -115,7 +116,11 @@ class FlatController extends Controller
             return response()->json(['error' => 'You can only delete your own flat.'], 403);
         }
 
-        $flat->delete();
+        try {
+            $flat->delete();
+        } catch (Exception $e) {
+            return response()->json(['error' => 'Flat is connected with lessees or balance.'], 409);
+        }
 
         return response()->json(null, 204);
     }
