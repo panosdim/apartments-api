@@ -12,7 +12,7 @@
 use Illuminate\Http\Request;
 
 $router->get('/', function () use ($router) {
-    return response()->json(["version" => "1.0"]);
+    return response()->json(['version' => '1.0']);
 });
 
 $router->post('login', ['uses' => 'AuthController@authenticate']);
@@ -39,15 +39,15 @@ $router->group(
             $router->delete('/{id:[\d]+}', 'FlatController@destroy');
         });
 
-        // Income API
+        // Lessee API
         $router->group([
-            'prefix' => '/income',
+            'prefix' => '/lessee',
         ], function () use ($router) {
-            $router->get('/', 'IncomeController@index');
-            $router->post('/', 'IncomeController@store');
-            $router->get('/{id:[\d]+}', 'IncomeController@show');
-            $router->put('/{id:[\d]+}', 'IncomeController@update');
-            $router->delete('/{id:[\d]+}', 'IncomeController@destroy');
+            $router->get('/', 'LesseeController@index');
+            $router->post('/', 'LesseeController@store');
+            $router->get('/{id:[\d]+}', 'LesseeController@show');
+            $router->put('/{id:[\d]+}', 'LesseeController@update');
+            $router->delete('/{id:[\d]+}', 'LesseeController@destroy');
         });
 
         // Expense API

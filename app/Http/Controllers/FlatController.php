@@ -17,7 +17,7 @@ class FlatController extends Controller
      */
     public function index(Request $request)
     {
-        return FlatResource::collection(Flat::where("user_id", $request->auth->id)->get());
+        return FlatResource::collection(Flat::where('user_id', $request->auth->id)->get());
     }
 
     /**
@@ -84,15 +84,15 @@ class FlatController extends Controller
             return response()->json(['error' => 'You can only edit your own flats.'], 403);
         }
 
-        if ($request->has("name")) {
+        if ($request->has('name')) {
             $flat->name = $request->name;
         }
 
-        if ($request->has("address")) {
+        if ($request->has('address')) {
             $flat->address = $request->address;
         }
 
-        if ($request->has("floor")) {
+        if ($request->has('floor')) {
             $flat->floor = $request->floor;
         }
 
