@@ -15,13 +15,13 @@ class LesseeResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'         => $this->id,
-            'name'       => $this->name,
-            'address'    => $this->address,
-            'postalCode' => $this->postal_code,
-            'from'       => $this->from,
-            'until'      => $this->until,
-            'flatId'     => $this->flat_id,
+            'id'          => $this->id,
+            'name'        => $this->name,
+            'address'     => $this->address,
+            'postal_code' => $this->postal_code,
+            'from'        => $this->from,
+            'until'       => $this->until,
+            'flat_id'     => $this->flat_id,
         ];
     }
 }
