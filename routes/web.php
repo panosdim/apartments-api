@@ -17,9 +17,6 @@ $router->get('/', function () use ($router) {
 
 $router->post('login', ['uses' => 'AuthController@authenticate']);
 
-// TODO: Remove register route in production
-$router->post('register', ['uses' => 'AuthController@register']);
-
 $router->group(
     ['middleware' => 'jwt.auth'],
     function () use ($router) {
@@ -50,15 +47,15 @@ $router->group(
             $router->delete('/{id:[\d]+}', 'LesseeController@destroy');
         });
 
-        // Expense API
+        // Balance API
         $router->group([
-            'prefix' => '/expense',
+            'prefix' => '/balance',
         ], function () use ($router) {
-            $router->get('/', 'ExpenseController@index');
-            $router->post('/', 'ExpenseController@store');
-            $router->get('/{id:[\d]+}', 'ExpenseController@show');
-            $router->put('/{id:[\d]+}', 'ExpenseController@update');
-            $router->delete('/{id:[\d]+}', 'ExpenseController@destroy');
+            $router->get('/', 'BalanceController@index');
+            $router->post('/', 'BalanceController@store');
+            $router->get('/{id:[\d]+}', 'BalanceController@show');
+            $router->put('/{id:[\d]+}', 'BalanceController@update');
+            $router->delete('/{id:[\d]+}', 'BalanceController@destroy');
         });
     }
 );
