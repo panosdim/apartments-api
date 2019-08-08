@@ -10,6 +10,10 @@ class Lessee extends Model
     public $timestamps = false;
     public $table = 'lessees';
 
+    protected $casts = [
+        'flat_id' => 'integer',
+    ];
+
     public function user()
     {
         return $this->belongsTo(Flat::class);
