@@ -22,6 +22,8 @@ class LesseeResource extends JsonResource
             'from'        => $this->from,
             'until'       => $this->until,
             'flat_id'     => $this->flat_id,
+            'rent'        => $this->rent,
+            'tin'         => $this->tin,
         ];
     }
 }

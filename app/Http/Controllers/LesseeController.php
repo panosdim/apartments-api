@@ -38,6 +38,8 @@ class LesseeController extends Controller
             'from'        => 'required|date|date_format:Y-m-d',
             'until'       => 'required|date|date_format:Y-m-d',
             'flat_id'     => 'required|numeric|exists:flats,id',
+            'rent'        => 'required|numeric',
+            'tin'         => 'required|numeric',
         ]);
 
         $lessee = Lessee::create([
@@ -47,6 +49,8 @@ class LesseeController extends Controller
             'from'        => $request->from,
             'until'       => $request->until,
             'flat_id'     => $request->flat_id,
+            'rent'        => $request->rent,
+            'tin'         => $request->tin,
         ]);
 
         return new LesseeResource($lessee);
@@ -86,6 +90,8 @@ class LesseeController extends Controller
             'postal_code' => 'string',
             'from'        => 'date|date_format:Y-m-d',
             'until'       => 'date|date_format:Y-m-d',
+            'rent'        => 'numeric',
+            'tin'         => 'numeric'
         ]);
 
         $lessee = Lessee::findOrFail($id);
@@ -113,6 +119,14 @@ class LesseeController extends Controller
 
         if ($request->has('until')) {
             $lessee->until = $request->until;
+        }
+
+        if ($request->has('rent')) {
+            $lessee->rent = $request->rent;
+        }
+
+        if ($request->has('tin')) {
+            $lessee->tin = $request->tin;
         }
 
         $lessee->save();
