@@ -11,10 +11,15 @@
  */
 use Illuminate\Http\Request;
 
+// Version info
 $router->get('/', function () use ($router) {
-    return response()->json(['version' => '1.0']);
+    return response()->json(['version' => '1.1']);
 });
 
+// Check TIN
+$router->get('checkTin/{tin:[\d]+}', ['uses' => 'CheckTinController@checkTin']);
+
+// Login
 $router->post('login', ['uses' => 'AuthController@authenticate']);
 
 $router->group(
