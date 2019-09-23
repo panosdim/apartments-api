@@ -39,6 +39,13 @@ class BalanceController extends Controller
             'flat_id' => 'required|numeric|exists:flats,id',
         ]);
 
+        $flat = Flat::where('id', $request->flat_id)->first();
+        // Check if currently authenticated user is the owner of the flat
+        if ($request->auth->id != $flat->user_id) {
+            return response()->json(['error' => 'You can only add balance to your own flats.'], 403);
+        }
+
+
         $balance = Balance::create([
             'date'    => $request->date,
             'amount'  => $request->amount,
@@ -85,7 +92,7 @@ class BalanceController extends Controller
 
         $balance = Balance::findOrFail($id);
         $flat = Flat::where('id', $balance->flat_id)->first();
-        // Check if currently authenticated user is the owner of the lessee
+        // Check if currently authenticated user is the owner of the balance
         if ($request->auth->id != $flat->user_id) {
             return response()->json(['error' => 'You can only update balance of your own flats.'], 403);
         }
@@ -118,7 +125,7 @@ class BalanceController extends Controller
     {
         $balance = Balance::findOrFail($id);
         $flat = Flat::where('id', $balance->flat_id)->first();
-        // Check if currently authenticated user is the owner of the lessee
+        // Check if currently authenticated user is the owner of the balance
         if ($request->auth->id != $flat->user_id) {
             return response()->json(['error' => 'You can only delete balance of your own flats.'], 403);
         }

@@ -4,7 +4,7 @@ It provides a REST API for CRUD operations needed by Apartments Track Applicatio
 
 ## Official Documentation
 
-Documentation for the REST API can be found on the [Apartments Track API](https://documenter.getpostman.com/view/4800685/S1LzwReP).
+Documentation for the REST API can be found on the [Apartments Track API](https://documenter.getpostman.com/view/4800685/SVmzswAp).
 
 ## Security Vulnerabilities
 
